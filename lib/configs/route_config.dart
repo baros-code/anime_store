@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../features/animes/domain/entities/anime.dart';
 import '../features/animes/presentation/ui/pages/anime_details_page.dart';
 import '../features/animes/presentation/ui/pages/animes_page.dart';
 import '../shared/presentation/ui/pages/error_page.dart';
@@ -34,7 +35,11 @@ class RouteConfig {
             path: AppRoutes.animeDetailsRoute.path,
             name: AppRoutes.animeDetailsRoute.name,
             pageBuilder: (context, state) {
-              return _buildPage(page: AnimeDetailsPage(), state: state);
+              final anime = state.extra as Anime;
+              return _buildPage(
+                page: AnimeDetailsPage(params: anime),
+                state: state,
+              );
             },
           ),
         ],

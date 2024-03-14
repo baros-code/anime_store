@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../../../stack/base/presentation/controlled_view.dart';
+import '../../../../../shared/presentation/extensions/widget_ext.dart';
 import '../../../../../shared/presentation/ui/custom/widgets/page_title.dart';
 import '../../../../../shared/presentation/ui/pages/base_page.dart';
 import '../../../../../stack/base/presentation/sub_view.dart';
+import '../../../domain/entities/anime.dart';
 import '../controllers/anime_details_page_controller.dart';
 
 class AnimeDetailsPage
-    extends ControlledView<AnimeDetailsPageController, Object> {
+    extends ControlledView<AnimeDetailsPageController, Anime> {
   AnimeDetailsPage({
     super.key,
     super.params,
@@ -29,6 +31,6 @@ class _Body extends SubView<AnimeDetailsPageController> {
     BuildContext context,
     AnimeDetailsPageController controller,
   ) {
-    return Container();
+    return Text(controller.anime.jpgUrl).centered();
   }
 }

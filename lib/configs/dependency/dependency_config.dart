@@ -24,13 +24,13 @@ abstract class DependencyConfig {
 
   static void _registerCubits() {
     locator.registerFactory(
-      () => AnimesCubit(locator()),
+      () => AnimeCubit(locator()),
     );
   }
 
   static void _registerUseCases() {
     locator.registerFactory(
-      () => GetAnimes(locator(), locator()),
+      () => GetAnimeList(locator(), locator()),
     );
   }
 
@@ -42,7 +42,7 @@ abstract class DependencyConfig {
 
   static void _registerRemoteServices() {
     locator.registerLazySingleton<AnimeRemoteService>(
-      () => AnimeRemoteServiceImpl(locator()),
+      () => AnimeRemoteServiceImpl(),
     );
   }
 

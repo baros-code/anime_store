@@ -3,15 +3,16 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../../configs/route_config.dart';
 import '../../../../../stack/base/presentation/controller.dart';
-import '../../bloc/animes_cubit.dart';
+import '../../../domain/entities/anime.dart';
+import '../../bloc/anime_cubit.dart';
 import '../models/anime_ui_model.dart';
 
 class AnimesPageController extends Controller<Object> {
   AnimesPageController(super.logger, super.popupManager);
 
-  late AnimesCubit _animesCubit;
+  late AnimeCubit _animesCubit;
 
-  List<AnimeUiModel> get animes => _animesCubit.animesCache;
+  List<AnimeUiModel> get animeList => _animesCubit.animeCache;
 
   int get pageSize => _animesCubit.defaultPageSize;
 
@@ -22,15 +23,14 @@ class AnimesPageController extends Controller<Object> {
   @override
   void onStart() {
     super.onStart();
-    _animesCubit = context.read<AnimesCubit>();
-    // fetchAnimes(0);
+    _animesCubit = context.read<AnimeCubit>();
   }
 
-  Future<bool> fetchAnimes(int pageIndex) {
-    return _animesCubit.fetchAnimes(pageIndex);
+  Future<bool> fetchAnimeList(int pageIndex) {
+    return _animesCubit.fetchAnimeList(pageIndex);
   }
 
-  void goToAnimeDetailsPage() {
-    context.goNamed(AppRoutes.animeDetailsRoute.name);
+  void goToAnimeDetailsPage(Anime anime) {
+    context.goNamed(AppRoutes.animeDetailsRoute.name, extra: anime);
   }
 }

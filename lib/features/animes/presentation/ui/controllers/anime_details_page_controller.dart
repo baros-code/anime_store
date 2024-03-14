@@ -1,22 +1,22 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../stack/base/presentation/controller.dart';
-import '../../bloc/animes_cubit.dart';
-import '../models/anime_ui_model.dart';
+import '../../../domain/entities/anime.dart';
+import '../../bloc/anime_cubit.dart';
 
-class AnimeDetailsPageController extends Controller<Object> {
+class AnimeDetailsPageController extends Controller<Anime> {
   AnimeDetailsPageController(
     super.logger,
     super.popupManager,
   );
 
-  late AnimesCubit _animesCubit;
-
-  List<AnimeUiModel> get animes => _animesCubit.animesCache;
+  late Anime anime;
+  late AnimeCubit _animesCubit;
 
   @override
   void onStart() {
     super.onStart();
-    _animesCubit = context.read<AnimesCubit>();
+    anime = params!;
+    _animesCubit = context.read<AnimeCubit>();
   }
 }

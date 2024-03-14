@@ -2,7 +2,7 @@ import '../../../../stack/common/models/failure.dart';
 import '../../../../stack/common/models/result.dart';
 import '../../domain/entities/anime_response.dart';
 import '../../domain/repositories/anime_repository.dart';
-import '../../domain/use_cases/get_animes.dart';
+import '../../domain/use_cases/get_anime_list.dart';
 import '../data_sources/remote/anime_remote_service.dart';
 
 class AnimeRepositoryImpl implements AnimeRepository {
@@ -11,11 +11,11 @@ class AnimeRepositoryImpl implements AnimeRepository {
   final AnimeRemoteService _remoteService;
 
   @override
-  Future<Result<AnimeResponse, Failure>> getAnimes(
-    GetAnimesParams params,
+  Future<Result<AnimeResponse, Failure>> getAnimeList(
+    GetAnimeListParams params,
   ) async {
     try {
-      final result = await _remoteService.getAnimes(params);
+      final result = await _remoteService.getAnimeList(params);
       if (result.isSuccessful) {
         return Result.success(value: result.value!.toEntity());
       }

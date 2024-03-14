@@ -1,10 +1,9 @@
-import '../stack/common/models/api/api_setup_params.dart';
-
 class ApiConfig {
-  static const String baseUrl = 'https://api.jikan.moe/v4';
+  static const String baseUrl = 'api.jikan.moe';
 
-  static ApiSetupParams get setupParams => ApiSetupParams(
-        baseUrl: baseUrl,
-        retryCount: 1,
-      );
+  static const String animeListEndpoint = '/v4/top/anime';
+
+  static String getAnimeCharactersEndpoint(int animeId) {
+    return '/v4/anime/$animeId/characters';
+  }
 }

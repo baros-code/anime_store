@@ -1,8 +1,6 @@
 import 'package:get_it/get_it.dart';
 
 import '../logging/logger.dart';
-import '../network/api_manager.dart';
-import '../network/connectivity_manager.dart';
 import '../popup/popup_manager.dart';
 
 /// Global service locator instance.
@@ -94,14 +92,6 @@ class ServiceLocator {
     // Logger
     _locator.registerLazySingleton<Logger>(
       LoggerImpl.new,
-    );
-    // ApiManager
-    _locator.registerLazySingleton<ApiManager>(
-      () => ApiManagerImpl(_locator(), _locator()),
-    );
-    // ConnectivityManager
-    _locator.registerLazySingleton<ConnectivityManager>(
-      ConnectivityManagerImpl.new,
     );
     // PopupManager
     _locator.registerLazySingleton<PopupManager>(

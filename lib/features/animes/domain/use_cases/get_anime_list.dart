@@ -4,20 +4,20 @@ import '../../../../stack/common/models/result.dart';
 import '../entities/anime_response.dart';
 import '../repositories/anime_repository.dart';
 
-class GetAnimes
-    extends UseCase<GetAnimesParams, Result<AnimeResponse, Failure>, void> {
-  GetAnimes(this._repository, super.logger);
+class GetAnimeList
+    extends UseCase<GetAnimeListParams, Result<AnimeResponse, Failure>, void> {
+  GetAnimeList(this._repository, super.logger);
 
   final AnimeRepository _repository;
 
   @override
-  Future<Result<AnimeResponse, Failure>> execute({GetAnimesParams? params}) {
-    return _repository.getAnimes(params!);
+  Future<Result<AnimeResponse, Failure>> call({GetAnimeListParams? params}) {
+    return _repository.getAnimeList(params!);
   }
 }
 
-class GetAnimesParams {
-  GetAnimesParams({
+class GetAnimeListParams {
+  GetAnimeListParams({
     required this.queryText,
     required this.pageSize,
     required this.startIndex,

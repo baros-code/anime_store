@@ -5,8 +5,8 @@ import '../../../../../shared/presentation/ui/custom/widgets/page_title.dart';
 import '../../../../../shared/presentation/ui/pages/base_page.dart';
 import '../../../../../stack/base/presentation/controlled_view.dart';
 import '../../../../../stack/base/presentation/sub_view.dart';
-import '../../bloc/animes_cubit.dart';
-import '../../bloc/animes_state.dart';
+import '../../bloc/anime_cubit.dart';
+import '../../bloc/anime_state.dart';
 import '../controllers/animes_page_controller.dart';
 import '../custom/widgets/anime_card.dart';
 import '../custom/widgets/paginatable_list_view.dart';
@@ -17,13 +17,11 @@ class AnimesPage extends ControlledView<AnimesPageController, Object> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AnimesCubit, AnimesState>(
-      buildWhen: (previous, current) => current is AnimesUpdated,
+    return BlocBuilder<AnimeCubit, AnimeState>(
+      buildWhen: (previous, current) => current is AnimeListUpdated,
       builder: (context, state) {
         return BasePage(
           title: const PageTitle('Anime Store'),
-          // Prevents the anime icon to move up when keyboard is opened
-          resizeToAvoidBottomInset: false,
           body: _Body(state),
         );
       },
@@ -34,7 +32,7 @@ class AnimesPage extends ControlledView<AnimesPageController, Object> {
 class _Body extends SubView<AnimesPageController> {
   _Body(this.state);
 
-  final AnimesState state;
+  final AnimeState state;
   @override
   Widget buildView(BuildContext context, AnimesPageController controller) {
     return Padding(
@@ -43,8 +41,9 @@ class _Body extends SubView<AnimesPageController> {
     );
   }
 
-  Widget _buildListView(AnimesState state, AnimesPageController controller) {
-    final animes = state is AnimesUpdated ? state.animes : controller.animes;
+  Widget _buildListView(AnimeState state, AnimesPageController controller) {
+    final animes =
+        state is AnimeListUpdated ? state.animeList : controller.animeList;
     return PaginatableListView(
       items: _buildListViewItems(controller, animes),
       itemSpacing: 12,
@@ -53,7 +52,7 @@ class _Body extends SubView<AnimesPageController> {
       emptyMessage: 'There is no anime to show.',
       errorMessage: 'There was an error while loading, please try again.',
       onPagination: (pageIndex) {
-        return controller.fetchAnimes(pageIndex);
+        return controller.fetchAnimeList(pageIndex);
       },
     );
   }
@@ -79,7 +78,7 @@ class _Body extends SubView<AnimesPageController> {
     if (item.isVisible) {
       return AnimeCard(
         item.anime,
-        onTap: controller.goToAnimeDetailsPage,
+        onTap: () => controller.goToAnimeDetailsPage(item.anime),
       );
     }
     return const SizedBox.shrink();
