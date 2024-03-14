@@ -24,13 +24,16 @@ abstract class DependencyConfig {
 
   static void _registerCubits() {
     locator.registerFactory(
-      () => AnimeCubit(locator()),
+      () => AnimeCubit(locator(), locator()),
     );
   }
 
   static void _registerUseCases() {
     locator.registerFactory(
       () => GetAnimeList(locator(), locator()),
+    );
+    locator.registerFactory(
+      () => GetAnimeCharacters(locator(), locator()),
     );
   }
 

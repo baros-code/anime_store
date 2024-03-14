@@ -8,7 +8,7 @@ part of 'anime_character_model.dart';
 
 AnimeCharacterModel _$AnimeCharacterModelFromJson(Map<String, dynamic> json) =>
     AnimeCharacterModel(
-      id: json['id'] as int?,
+      id: json['mal_id'] as int?,
       name: json['name'] as String?,
       images: json['images'] == null
           ? null
@@ -18,7 +18,7 @@ AnimeCharacterModel _$AnimeCharacterModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$AnimeCharacterModelToJson(
         AnimeCharacterModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'mal_id': instance.id,
       'name': instance.name,
       'images': instance.images,
     };

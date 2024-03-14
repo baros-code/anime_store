@@ -14,6 +14,7 @@ class AnimeCharacterModel {
     required this.images,
   });
 
+  @JsonKey(name: 'mal_id')
   final int? id;
   final String? name;
   final CustomImageModel? images;

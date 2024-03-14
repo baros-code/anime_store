@@ -19,6 +19,16 @@ class AnimeUiModel extends Equatable {
     );
   }
 
+  AnimeUiModel copyWith({
+    Anime? anime,
+    bool? isVisible,
+  }) {
+    return AnimeUiModel(
+      anime: anime ?? this.anime,
+      isVisible: isVisible ?? this.isVisible,
+    );
+  }
+
   @override
   List<Object?> get props => [anime, isVisible];
 }

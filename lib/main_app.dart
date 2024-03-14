@@ -7,23 +7,13 @@ import 'features/animes/presentation/bloc/anime_cubit.dart';
 import 'stack/core/ioc/service_locator.dart';
 import 'stack/core/logging/logger.dart';
 
-class MainApp extends StatefulWidget {
+class MainApp extends StatelessWidget {
   const MainApp({
     super.key,
     required this.logger,
   });
 
   final Logger logger;
-
-  @override
-  State<MainApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MainApp> {
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

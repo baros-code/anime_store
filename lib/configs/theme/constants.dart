@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ThemeConstants {
-  static const darkThemeBackgroundColor = Color(0xFF1C242A);
+  static const darkThemeBackgroundColor = Colors.black;
   static const darkThemePrimaryColor = Color(0xFF4893EB);
   static const darkThemeAppBarBackgroundColor = Colors.transparent;
   static const darkThemeDisabledButtonBackgroundColor = Colors.grey;

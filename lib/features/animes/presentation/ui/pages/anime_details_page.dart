@@ -1,12 +1,20 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../../stack/base/presentation/controlled_view.dart';
+import '../../../../../configs/asset_config.dart';
+import '../../../../../shared/presentation/extensions/build_context_ext.dart';
 import '../../../../../shared/presentation/extensions/widget_ext.dart';
-import '../../../../../shared/presentation/ui/custom/widgets/page_title.dart';
+import '../../../../../shared/presentation/ui/custom/widgets/custom_card.dart';
 import '../../../../../shared/presentation/ui/pages/base_page.dart';
 import '../../../../../stack/base/presentation/sub_view.dart';
 import '../../../domain/entities/anime.dart';
+import '../../../domain/entities/anime_character.dart';
+import '../../bloc/anime_cubit.dart';
+import '../../bloc/anime_state.dart';
 import '../controllers/anime_details_page_controller.dart';
+import '../custom/widgets/anime_card.dart';
 
 class AnimeDetailsPage
     extends ControlledView<AnimeDetailsPageController, Anime> {
@@ -17,20 +25,124 @@ class AnimeDetailsPage
 
   @override
   Widget build(BuildContext context) {
-    return BasePage(
-      title: const PageTitle('Anime Detay'),
-      backButtonEnabled: true,
-      body: _Body(),
+    return BlocConsumer<AnimeCubit, AnimeState>(
+      listener: (context, state) => controller.handleStates(state),
+      buildWhen: (previous, current) =>
+          current is AnimeCharactersLoading ||
+          current is AnimeCharactersFetched,
+      builder: (context, state) {
+        return BasePage(
+          title: const _Title('Anime Details'),
+          backButtonEnabled: true,
+          body: _buildView(context, state),
+        );
+      },
+    );
+  }
+
+  Widget _buildView(BuildContext context, AnimeState state) {
+    if (state is AnimeCharactersFetched) {
+      return _Body(state.characters);
+    }
+    return const CircularProgressIndicator().centered();
+  }
+}
+
+class _Title extends StatelessWidget {
+  const _Title(this.title);
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      title,
+      style: context.textTheme.headlineSmall,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
     );
   }
 }
 
 class _Body extends SubView<AnimeDetailsPageController> {
+  _Body(this.characters);
+
+  final List<AnimeCharacter> characters;
   @override
   Widget buildView(
     BuildContext context,
     AnimeDetailsPageController controller,
   ) {
-    return Text(controller.anime.jpgUrl).centered();
+    final anime = controller.anime;
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          AnimeCard(anime, isAnimeDetailsCard: true),
+          const SizedBox(height: 16),
+          _CharactersSection(characters),
+        ],
+      ),
+    );
+  }
+}
+
+class _CharactersSection extends StatelessWidget {
+  const _CharactersSection(this.characters);
+
+  final List<AnimeCharacter> characters;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const _Title('Characters'),
+        const SizedBox(height: 16),
+        CustomCard(
+          height: 250,
+          child: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+            ),
+            itemCount: characters.length,
+            itemBuilder: (context, index) {
+              return _CharacterCard(characters[index]);
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _CharacterCard extends StatelessWidget {
+  const _CharacterCard(
+    this.character,
+  );
+
+  final AnimeCharacter character;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        ClipOval(
+          child: CachedNetworkImage(
+            imageUrl: character.images.jpg.imageUrl,
+            fit: BoxFit.cover,
+            width: 100,
+            height: 100,
+            // Keep this low to avoid memory issues & app crash
+            memCacheWidth: 100,
+            errorWidget: (context, url, error) => Image.asset(AssetConfig.logo),
+          ),
+        ),
+        Text(
+          character.name,
+          style: context.textTheme.bodyMedium,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ],
+    );
   }
 }

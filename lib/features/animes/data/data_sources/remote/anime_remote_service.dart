@@ -14,7 +14,7 @@ abstract class AnimeRemoteService {
     GetAnimeListParams params,
   );
 
-  Future<Result<AnimeCharacterResponseModel, Failure>> getAnimeCharacters(
+  Future<Result<List<AnimeCharacterResponseModel>, Failure>> getAnimeCharacters(
     int animeId,
   );
 }
@@ -54,7 +54,7 @@ class AnimeRemoteServiceImpl implements AnimeRemoteService {
   }
 
   @override
-  Future<Result<AnimeCharacterResponseModel, Failure>> getAnimeCharacters(
+  Future<Result<List<AnimeCharacterResponseModel>, Failure>> getAnimeCharacters(
     int animeId,
   ) async {
     try {
@@ -67,7 +67,11 @@ class AnimeRemoteServiceImpl implements AnimeRemoteService {
         {'url': uri.toString()},
       );
       final json = jsonDecode(result);
-      return Result.success(value: AnimeCharacterResponseModel.fromJson(json));
+      return Result.success(
+        value: (json['data'] as List)
+            .map((e) => AnimeCharacterResponseModel.fromJson(e))
+            .toList(),
+      );
     } catch (e) {
       return Result.failure(Failure(message: e.toString()));
     }

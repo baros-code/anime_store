@@ -9,8 +9,8 @@ class AnimeCharacter extends Equatable {
     required this.images,
   });
 
-  final int? id;
-  final String? name;
+  final int id;
+  final String name;
   final CustomImage images;
 
   static AnimeCharacter nullValue() {
