@@ -5,21 +5,21 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i6;
 
-import 'package:anime_store/features/animes/data/data_sources/remote/anime_remote_service.dart'
+import 'package:anime_store/features/anime/data/data_sources/remote/anime_remote_service.dart'
     as _i5;
-import 'package:anime_store/features/animes/data/models/anime_character_response_model.dart'
+import 'package:anime_store/features/anime/data/models/anime_character_response_model.dart'
     as _i9;
-import 'package:anime_store/features/animes/data/models/anime_response_model.dart'
+import 'package:anime_store/features/anime/data/models/anime_response_model.dart'
     as _i7;
-import 'package:anime_store/features/animes/domain/entities/anime_character_response.dart'
+import 'package:anime_store/features/anime/domain/entities/anime_character_response.dart'
     as _i12;
-import 'package:anime_store/features/animes/domain/entities/anime_response.dart'
+import 'package:anime_store/features/anime/domain/entities/anime_response.dart'
     as _i11;
-import 'package:anime_store/features/animes/domain/repositories/anime_repository.dart'
+import 'package:anime_store/features/anime/domain/repositories/anime_repository.dart'
     as _i10;
-import 'package:anime_store/features/animes/domain/use_cases/get_anime_characters.dart'
+import 'package:anime_store/features/anime/domain/use_cases/get_anime_characters.dart'
     as _i13;
-import 'package:anime_store/features/animes/domain/use_cases/get_anime_list.dart'
+import 'package:anime_store/features/anime/domain/use_cases/get_anime_list.dart'
     as _i8;
 import 'package:anime_store/stack/common/models/failure.dart' as _i1;
 import 'package:anime_store/stack/common/models/result.dart' as _i3;

@@ -15,7 +15,7 @@ abstract class DependencyConfig {
       () => SplashPageController(locator(), locator()),
     );
     locator.registerFactory(
-      () => AnimesPageController(locator(), locator()),
+      () => AnimePageController(locator(), locator()),
     );
     locator.registerFactory(
       () => AnimeDetailsPageController(locator(), locator()),

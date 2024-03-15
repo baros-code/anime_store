@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../features/animes/domain/entities/anime.dart';
-import '../features/animes/presentation/ui/pages/anime_details_page.dart';
-import '../features/animes/presentation/ui/pages/animes_page.dart';
+import '../features/anime/domain/entities/anime.dart';
+import '../features/anime/presentation/ui/pages/anime_details_page.dart';
+import '../features/anime/presentation/ui/pages/anime_page.dart';
 import '../shared/presentation/ui/pages/error_page.dart';
 import '../shared/presentation/ui/pages/splash_page.dart';
 
@@ -27,7 +27,7 @@ class RouteConfig {
         path: AppRoutes.homeRoute.path,
         name: AppRoutes.homeRoute.name,
         pageBuilder: (context, state) {
-          return _buildPage(page: AnimesPage(), state: state);
+          return _buildPage(page: AnimePage(), state: state);
         },
         routes: [
           GoRoute(

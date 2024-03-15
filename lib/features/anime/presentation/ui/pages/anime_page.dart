@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -7,13 +8,13 @@ import '../../../../../stack/base/presentation/controlled_view.dart';
 import '../../../../../stack/base/presentation/sub_view.dart';
 import '../../bloc/anime_cubit.dart';
 import '../../bloc/anime_state.dart';
-import '../controllers/animes_page_controller.dart';
+import '../controllers/anime_page_controller.dart';
 import '../custom/widgets/anime_card.dart';
 import '../custom/widgets/paginatable_list_view.dart';
 import '../models/anime_ui_model.dart';
 
-class AnimesPage extends ControlledView<AnimesPageController, Object> {
-  AnimesPage({super.key, super.params});
+class AnimePage extends ControlledView<AnimePageController, Object> {
+  AnimePage({super.key, super.params});
 
   @override
   Widget build(BuildContext context) {
@@ -45,16 +46,16 @@ class _Title extends StatelessWidget {
   }
 }
 
-class _Body extends SubView<AnimesPageController> {
+class _Body extends SubView<AnimePageController> {
   _Body(this.state);
 
   final AnimeState state;
   @override
-  Widget buildView(BuildContext context, AnimesPageController controller) {
+  Widget buildView(BuildContext context, AnimePageController controller) {
     return _buildListView(state, controller);
   }
 
-  Widget _buildListView(AnimeState state, AnimesPageController controller) {
+  Widget _buildListView(AnimeState state, AnimePageController controller) {
     final animes =
         state is AnimeListFetched ? state.animeList : controller.animeList;
     return PaginatableListView(
@@ -70,7 +71,7 @@ class _Body extends SubView<AnimesPageController> {
   }
 
   List<PaginatableListViewItem> _buildListViewItems(
-    AnimesPageController controller,
+    AnimePageController controller,
     List<AnimeUiModel> items,
   ) {
     return items
@@ -84,7 +85,7 @@ class _Body extends SubView<AnimesPageController> {
   }
 
   Widget _buildListViewItem(
-    AnimesPageController controller,
+    AnimePageController controller,
     AnimeUiModel item,
   ) {
     if (item.isVisible) {

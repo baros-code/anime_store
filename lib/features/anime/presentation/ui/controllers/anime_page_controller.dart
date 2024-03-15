@@ -1,3 +1,4 @@
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -7,8 +8,8 @@ import '../../../domain/entities/anime.dart';
 import '../../bloc/anime_cubit.dart';
 import '../models/anime_ui_model.dart';
 
-class AnimesPageController extends Controller<Object> {
-  AnimesPageController(super.logger, super.popupManager);
+class AnimePageController extends Controller<Object> {
+  AnimePageController(super.logger, super.popupManager);
 
   late AnimeCubit _animesCubit;
 
