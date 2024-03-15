@@ -1,5 +1,3 @@
-import 'package:collection/collection.dart';
-
 import '../../../../stack/base/presentation/safe_cubit.dart';
 import '../../domain/use_cases/get_anime_characters.dart';
 import '../../domain/use_cases/get_anime_list.dart';
@@ -48,10 +46,7 @@ class AnimeCubit extends SafeCubit<AnimeState> {
   Future<void> fetchAnimeCharacters(int animeId) async {
     emit(AnimeCharactersLoading());
     final result = await _getAnimeCharacters(params: animeId);
-    final anime = animeCache.firstWhereOrNull(
-      (e) => e.anime.id == animeId,
-    );
-    if (result.isSuccessful && anime != null) {
+    if (result.isSuccessful) {
       emit(
         AnimeCharactersFetched(result.value!.map((e) => e.character).toList()),
       );
