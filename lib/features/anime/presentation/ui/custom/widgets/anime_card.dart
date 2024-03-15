@@ -23,69 +23,65 @@ class AnimeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        child: Column(
-          children: [
-            CustomCard(
-              height: 140,
-              padding: const EdgeInsets.all(8),
-              backgroundColor: context.colorScheme.background,
-              showBorder: !isAnimeDetailsCard,
-              borderRadius: isAnimeDetailsCard
-                  ? null
-                  : const BorderRadius.all(Radius.circular(8)),
-              borderColor:
-                  isAnimeDetailsCard ? null : context.colorScheme.primary,
-              child: Row(
-                children: [
-                  CachedNetworkImage(
-                    imageUrl: anime.jpgUrl,
-                    fit: BoxFit.cover,
-                    width: 80,
-                    placeholder: (context, url) =>
-                        const CustomProgressSpinner(),
-                    errorWidget: (context, url, error) =>
-                        Image.asset(AssetConfig.logo),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _CardContent(
-                          anime.title,
-                          textStyle: context.textTheme.headlineSmall,
-                          maxLines: isAnimeDetailsCard ? 2 : 1,
-                        ),
-                        Divider(
-                          thickness: 1,
-                          color: context.colorScheme.secondary,
-                        ),
-                        _CardContent(
-                          'Rating score: ${anime.score}',
-                          textStyle: context.textTheme.bodyMedium,
-                        ),
-                        const Spacer(),
-                        if (isAnimeDetailsCard) ...[
-                          _CardContent('Genre: ${anime.allGenres}'),
-                          _CardContent('Episodes: ${anime.episodes}'),
-                        ],
+      child: Column(
+        children: [
+          CustomCard(
+            height: 140,
+            padding: const EdgeInsets.all(8),
+            backgroundColor: context.colorScheme.background,
+            showBorder: !isAnimeDetailsCard,
+            borderRadius: isAnimeDetailsCard
+                ? null
+                : const BorderRadius.all(Radius.circular(8)),
+            borderColor:
+                isAnimeDetailsCard ? null : context.colorScheme.primary,
+            child: Row(
+              children: [
+                CachedNetworkImage(
+                  imageUrl: anime.jpgUrl,
+                  fit: BoxFit.cover,
+                  width: 80,
+                  placeholder: (context, url) => const CustomProgressSpinner(),
+                  errorWidget: (context, url, error) =>
+                      Image.asset(AssetConfig.logo),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _CardContent(
+                        anime.title,
+                        textStyle: context.textTheme.headlineSmall,
+                        maxLines: isAnimeDetailsCard ? 2 : 1,
+                      ),
+                      Divider(
+                        thickness: 1,
+                        color: context.colorScheme.secondary,
+                      ),
+                      _CardContent(
+                        'Rating score: ${anime.score}',
+                        textStyle: context.textTheme.bodyMedium,
+                      ),
+                      const Spacer(),
+                      if (isAnimeDetailsCard) ...[
+                        _CardContent('Genre: ${anime.allGenres}'),
+                        _CardContent('Episodes: ${anime.episodes}'),
                       ],
-                    ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            if (isAnimeDetailsCard) ...[
-              const SizedBox(height: 16),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Text(anime.synopsis),
-              ),
-            ]
-          ],
-        ),
+          ),
+          if (isAnimeDetailsCard) ...[
+            const SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Text(anime.synopsis),
+            ),
+          ]
+        ],
       ),
     );
   }

@@ -10,6 +10,8 @@ abstract class AnimeState extends Equatable {
 
 class AnimeInitial extends AnimeState {}
 
+class AnimeListLoading extends AnimeState {}
+
 class AnimeListFetched extends AnimeState {
   AnimeListFetched(this.animeList);
 

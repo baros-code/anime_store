@@ -16,7 +16,6 @@ class AnimeCubit extends SafeCubit<AnimeState> {
   final List<AnimeUiModel> animeCache = [];
 
   final int defaultPageSize = 5;
-  bool isInitialLoading = true;
   // Initial value, will be updated after the first fetch
   int maxItemCount = 1;
 
@@ -24,6 +23,7 @@ class AnimeCubit extends SafeCubit<AnimeState> {
     if (pageIndex == 1) {
       animeCache.clear();
     }
+    emit(AnimeListLoading());
     final result = await _getAnimeList(
       params: GetAnimeListParams(
         queryText: typeQuery,
@@ -34,9 +34,11 @@ class AnimeCubit extends SafeCubit<AnimeState> {
     if (result.isSuccessful) {
       final uiModels = result.value!.data.map(AnimeUiModel.fromEntity).toList();
       animeCache.addAll(uiModels);
-      isInitialLoading = false;
       if (pageIndex == 1) maxItemCount = result.value!.pagination.items.total;
-      emit(AnimeListFetched(animeCache));
+      // Delay to show loading indicator, just for better UX, can be removed
+      await Future.delayed(const Duration(milliseconds: 300), () {
+        emit(AnimeListFetched(animeCache));
+      });
       return true;
     }
     emit(AnimeListFetchFailed());

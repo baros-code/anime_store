@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../../shared/presentation/extensions/widget_ext.dart';
 import '../../../../../../shared/presentation/ui/custom/widgets/custom_progress_spinner.dart';
 import '../../../../../../shared/presentation/ui/custom/widgets/empty_view.dart';
 import '../../../../../../stack/core/ioc/service_locator.dart';
@@ -68,23 +69,20 @@ class _PaginatableListViewState<T extends Object>
     if (_isFirstLoadFailed) {
       return _buildErrorView();
     }
-    if (_isFirstLoading && itemsLength == 0) {
-      return const CustomProgressSpinner();
-    } else if (visibleItems.isEmpty && widget.emptyMessage != null) {
-      return _buildEmptyView(widget.emptyMessage);
-    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(height: widget.padding?.top),
         Expanded(
-          child: visibleItems.isEmpty && widget.emptyMessage != null
-              ? _buildEmptyView(widget.emptyMessage)
-              : _buildListView(
-                  visibleItems.toList(),
-                  itemsLength,
-                ),
+          child: _isFirstLoading && itemsLength == 0
+              ? _buildSpinner()
+              : visibleItems.isEmpty && widget.emptyMessage != null
+                  ? _buildEmptyView(widget.emptyMessage)
+                  : _buildListView(
+                      visibleItems.toList(),
+                      itemsLength,
+                    ),
         ),
       ],
     );
@@ -210,6 +208,10 @@ class _PaginatableListViewState<T extends Object>
               );
       },
     );
+  }
+
+  Widget _buildSpinner() {
+    return const CustomProgressSpinner().centered();
   }
 
   Widget _buildEmptyView(String? text) {

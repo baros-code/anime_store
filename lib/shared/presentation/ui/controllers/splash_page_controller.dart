@@ -18,7 +18,7 @@ class SplashPageController extends Controller<Object> {
   void onStart() {
     super.onStart();
     _initAnimation();
-    // Spend some time to show the animation
+    // Spend some time to show the splash screen
     Future.delayed(
       _animationDuration,
       () => context.goNamed(AppRoutes.homeRoute.name),

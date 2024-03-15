@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -52,21 +51,25 @@ class _Body extends SubView<AnimePageController> {
   final AnimeState state;
   @override
   Widget buildView(BuildContext context, AnimePageController controller) {
-    return _buildListView(state, controller);
+    return _buildViews(state, controller);
   }
 
-  Widget _buildListView(AnimeState state, AnimePageController controller) {
-    final animes =
+  Widget _buildViews(AnimeState state, AnimePageController controller) {
+    final animeList =
         state is AnimeListFetched ? state.animeList : controller.animeList;
-    return PaginatableListView(
-      items: _buildListViewItems(controller, animes),
-      pageSize: controller.pageSize,
-      maxItemCount: controller.maxItemCount,
-      emptyMessage: 'There is no anime to show.',
-      errorMessage: 'There was an error while loading, please try again.',
-      onPagination: (pageIndex) {
-        return controller.fetchAnimeList(pageIndex);
-      },
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      child: PaginatableListView(
+        items: _buildListViewItems(controller, animeList),
+        pageSize: controller.pageSize,
+        itemSpacing: 12,
+        maxItemCount: controller.maxItemCount,
+        errorMessage: 'There was an error while loading, please try again.',
+        onPagination: (pageIndex) {
+          return controller.fetchAnimeList(pageIndex);
+        },
+      ),
     );
   }
 

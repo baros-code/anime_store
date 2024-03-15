@@ -73,7 +73,7 @@ void main() {
     ),
   ];
 
-  test('Initial state should be empty', () {
+  test('initial state should be empty', () {
     expect(animeCubit.state, AnimeInitial());
   });
 

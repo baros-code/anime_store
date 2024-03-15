@@ -1,4 +1,3 @@
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -11,24 +10,22 @@ import '../models/anime_ui_model.dart';
 class AnimePageController extends Controller<Object> {
   AnimePageController(super.logger, super.popupManager);
 
-  late AnimeCubit _animesCubit;
+  late AnimeCubit _animeCubit;
 
-  List<AnimeUiModel> get animeList => _animesCubit.animeCache;
+  List<AnimeUiModel> get animeList => _animeCubit.animeCache;
 
-  int get pageSize => _animesCubit.defaultPageSize;
+  int get pageSize => _animeCubit.defaultPageSize;
 
-  bool get isInitialLoading => _animesCubit.isInitialLoading;
-
-  int get maxItemCount => _animesCubit.maxItemCount;
+  int get maxItemCount => _animeCubit.maxItemCount;
 
   @override
   void onStart() {
     super.onStart();
-    _animesCubit = context.read<AnimeCubit>();
+    _animeCubit = context.read<AnimeCubit>();
   }
 
   Future<bool> fetchAnimeList(int pageIndex) {
-    return _animesCubit.fetchAnimeList(pageIndex);
+    return _animeCubit.fetchAnimeList(pageIndex);
   }
 
   void goToAnimeDetailsPage(Anime anime) {
