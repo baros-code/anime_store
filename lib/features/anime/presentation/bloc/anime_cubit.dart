@@ -15,7 +15,7 @@ class AnimeCubit extends SafeCubit<AnimeState> {
 
   final List<AnimeUiModel> animeCache = [];
 
-  final int defaultPageSize = 5;
+  final int defaultPageSize = 8;
   // Initial value, will be updated after the first fetch
   int maxItemCount = 1;
 

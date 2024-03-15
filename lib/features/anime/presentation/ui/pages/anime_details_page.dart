@@ -75,6 +75,8 @@ class _Body extends SubView<AnimeDetailsPageController> {
   ) {
     final anime = controller.anime;
     return SingleChildScrollView(
+      // This is default behavior for Android, we need to set this for iOS
+      physics: const ClampingScrollPhysics(),
       child: Column(
         children: [
           AnimeCard(anime, isAnimeDetailsCard: true),
@@ -148,14 +150,15 @@ class _CharacterCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final deviceSize = MediaQuery.of(context).size;
     return Column(
       children: [
         ClipOval(
           child: CachedNetworkImage(
             imageUrl: character.images.jpg.imageUrl,
             fit: BoxFit.cover,
-            width: 100,
-            height: 100,
+            width: 90,
+            height: 90,
             // Keep this low to avoid memory issues & app crash
             memCacheWidth: 100,
             errorWidget: (context, url, error) => Image.asset(AssetConfig.logo),
