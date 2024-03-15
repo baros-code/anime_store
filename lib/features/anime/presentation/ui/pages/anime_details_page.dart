@@ -86,10 +86,17 @@ class _Body extends SubView<AnimeDetailsPageController> {
   }
 }
 
-class _CharactersSection extends StatelessWidget {
+class _CharactersSection extends StatefulWidget {
   const _CharactersSection(this.characters);
 
   final List<AnimeCharacter> characters;
+
+  @override
+  State<_CharactersSection> createState() => _CharactersSectionState();
+}
+
+class _CharactersSectionState extends State<_CharactersSection> {
+  int _itemsNumber = 6;
 
   @override
   Widget build(BuildContext context) {
@@ -99,18 +106,36 @@ class _CharactersSection extends StatelessWidget {
         const SizedBox(height: 16),
         CustomCard(
           height: 250,
-          child: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
+          child: NotificationListener<ScrollNotification>(
+            onNotification: (scrollNotification) =>
+                _handleScroll(scrollNotification),
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+              ),
+              itemCount: _itemsNumber,
+              itemBuilder: (context, index) {
+                return _CharacterCard(widget.characters[index]);
+              },
             ),
-            itemCount: characters.length,
-            itemBuilder: (context, index) {
-              return _CharacterCard(characters[index]);
-            },
           ),
         ),
       ],
     );
+  }
+
+  bool _handleScroll(ScrollNotification scrollNotification) {
+    if (scrollNotification.metrics.pixels ==
+            scrollNotification.metrics.maxScrollExtent &&
+        _itemsNumber < widget.characters.length) {
+      setState(() {
+        _itemsNumber += 6;
+        if (_itemsNumber > widget.characters.length) {
+          _itemsNumber = widget.characters.length;
+        }
+      });
+    }
+    return false;
   }
 }
 
